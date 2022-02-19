@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Bikayi
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label>Select Category</ion-label>
+        <ion-select mode="ios" okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedCategory"
+          interface="action-sheet">
+          <ion-select-option *ngFor="let cat of categorysList" [value]="cat"> {{cat}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+    <!-- <ion-col size="6">
+      <ion-item class="ion-padding">
+        <ion-label> Select year</ion-label>
+        <ion-datetime interface="alert" [showClearButton]="true" presentation="year" min="1900" max="2018"
+          [(ngModel)]="selectedYear" (ionChange)="yearOnchange()">
+        </ion-datetime>
+      </ion-item>
+    </ion-col> -->
+  </ion-row>
+
+  <ion-grid class="grid-class">
+
+
+    <h2>Top Nobel prize winners :</h2>
+    <ion-slides pager="true">
+      <ion-slide *ngFor="let item of moreThenOne ">
+        <ion-card class="ion-padding" class="card-top">
+          <ion-row>
+            <ion-col>
+              <ion-card-title class="ion-padding">Name : {{item.firstname}} {{item.surname}}</ion-card-title>
+              <ion-card-subtitle>Number Of times : {{item.share}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-row *ngFor="let item of filteredData()" class="ion-no-padding ion-no-margin row-class">
+      <ion-col size="12" *ngIf="item.laureates && item.laureates.length" class="ion-no-padding ion-no-margin row-class">
+        <div *ngIf="item.visible">
+          <ion-card *ngFor="let subItem of item.laureates">
+            <ion-card-header>
+              <ion-card-title>{{subItem.firstname}} {{subItem.surname}}</ion-card-title>
+            </ion-card-header>
+            <ion-row>
+              <ion-col size="6" class="ion-padding-start">
+                <ion-card-subtitle>Category : {{item.category}}</ion-card-subtitle>
+              </ion-col>
+              <ion-col size="6" class="ion-padding-end ion-text-right">
+                <ion-card-subtitle> year : {{item.year}}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+            <ion-card-content *ngIf="subItem.motivation">
+              {{subItem.motivation}}
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
